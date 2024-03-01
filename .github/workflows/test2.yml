@@ -1,5 +1,9 @@
 name: test2
-description: Test Workflow
+
+on:
+  push:
+    branches:
+      - prd
 
 jobs:
   Test:

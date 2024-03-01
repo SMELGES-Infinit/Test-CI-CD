@@ -1,5 +1,4 @@
 name: test-actions
-description: Test, Transport and Deploy App into QAS
 
 on:
   push:
@@ -37,7 +36,7 @@ jobs:
   Transport-To-QAS-Branch:
     needs: Execute-API-Tests
     runs-on: ubuntu-latest
-    if: ${{ needs.Install-And-Run-API.result == 'success' }}
+    if: ${{ needs.Execute-API-Tests.result == 'success' }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
