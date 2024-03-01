@@ -47,7 +47,7 @@ jobs:
           git config user.email "actions@github.com"
           git fetch --all
           git checkout qas
-          git merge --ff-only ${{ github.sha }}
+          git merge --ff-only ${{ github.sha }} --allow-unrelated-histories
           git push origin qas
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
