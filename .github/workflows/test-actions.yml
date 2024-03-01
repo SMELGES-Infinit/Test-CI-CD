@@ -1,0 +1,54 @@
+name: test-actions
+description: Test, Transport and Deploy App into QAS
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  Execute-API-Tests:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: ./.github/actions/setup-node
+
+      - name: Install Bats
+        run: npm install -g bats
+
+      - name: Run Bats Version
+        run: bats -v
+
+      - name: Cache Bats Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-bats-${{ hashFiles('package-lock.json') }}
+
+      - name: Setup Python
+        uses: ./.github/actions/setup-python
+
+      - name: Execute API Tests
+        uses: ./.github/actions/test-api
+
+  Transport-To-QAS-Branch:
+    needs: Execute-API-Tests
+    runs-on: ubuntu-latest
+    if: ${{ needs.Install-And-Run-API.result == 'success' }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Transport Commit to QAS Branch
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git fetch --all
+          git checkout qas
+          git merge --ff-only ${{ github.sha }}
+          git push origin qas
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

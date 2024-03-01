@@ -1,0 +1,27 @@
+# Arquivo: .github/actions/setup-python/action.yml
+
+name: 'Setup Python'
+description: 'Esta ação configura o Python e instala as dependências do App'
+author: 'Sérgio Melges'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Ensure Pip Cache Directory Exists
+      run: mkdir -p ~/.cache/pip
+      shell: bash
+
+    - name: Setup Python
+      uses: actions/setup-python@v5.0.0
+      with:
+        python-version: 3.12.2
+        cache: pip
+        architecture: x64
+
+    - name: Check Python Version
+      run: python --version
+      shell: bash
+
+    - name: Install the App dependencies
+      run: pip install -r test-api/requirements.txt
+      shell: bash

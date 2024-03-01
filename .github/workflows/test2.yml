@@ -1,0 +1,10 @@
+name: test2
+description: Test Workflow
+
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        run: echo Test Workflow
+        shell: bash

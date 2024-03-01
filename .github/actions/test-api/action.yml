@@ -1,0 +1,26 @@
+# Arquivo: .github/actions/setup-python/action.yml
+
+name: 'Test API'
+description: 'Esta ação testa e valida todas as rotas de uma API'
+author: 'Sérgio Melges'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run API
+      run: python test-api/main.py &
+      shell: bash
+
+    - name: Wait for API to Initialize
+      run: sleep 5
+      shell: bash
+
+    - name: Execute Tests
+      run: |
+        chmod +x ./.github/scripts/test-api.sh
+        ./.github/scripts/test-api.sh
+      shell: bash
+
+    - name: Kill API Process
+      run: taskkill /F /IM python.exe /T
+      shell: cmd

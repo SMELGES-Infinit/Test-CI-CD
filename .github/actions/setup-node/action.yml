@@ -1,0 +1,13 @@
+# Arquivo: .github/actions/setup-node/action.yml
+
+name: 'Setup Node.js'
+description: 'Esta ação configura o Node.js'
+author: 'Sérgio Melges'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Node.js
+      uses: actions/setup-node@v4.0.2
+      with:
+        node-version: '20'
