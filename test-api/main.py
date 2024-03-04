@@ -14,6 +14,10 @@ def root():
 def ping():
     return "OK"
 
+@app.route('/test')
+def ping():
+    return {"message": "No data"}
+
 # Executando o aplicativo na porta 5000
 if __name__ == '__main__':
     app.run(debug=False, port=5000)

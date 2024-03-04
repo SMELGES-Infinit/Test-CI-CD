@@ -7,6 +7,7 @@ BASE_URL="http://localhost:5000"
 ROUTES=(
     "/"
     "/ping"
+    "/test"
 )
 
 # Loop através de todas as rotas e fazer solicitações HTTP
